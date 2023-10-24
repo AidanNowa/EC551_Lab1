@@ -44,4 +44,7 @@ The program can be run with the following command on windows:
 The input file is passed as an argument with the run command.
 Input constraints can be found on the example input text files.
 
+# Collaborators 
+This program was made with the assistance of ChatGPT-3.5 as an AI coding copilot. ChatGPT was 
+used mainly for debugging/syntax and recommendations on function implementations.
   
