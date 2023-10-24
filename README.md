@@ -41,7 +41,7 @@ The program can be run with the following command on windows:
 
 **python .\program1.py input.txt**
 
-The input file is passed as argument with the run command.
+The input file is passed as an argument with the run command.
 Input constraints can be found on the example input text files.
 
   
