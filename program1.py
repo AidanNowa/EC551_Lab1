@@ -326,7 +326,7 @@ def main():
 
     input_file = args.input_file
 
-    is_logic_circuit = input('Is the input a combinational logic circuit or a boolean alegbraic function? (C/B): ')
+    is_logic_circuit = input('Is the input a combinational logic circuit or a boolean algebraic function? (C/B): ')
     print('') #add spacing for output visability
 
     circuit_to_bool_expression = ''
