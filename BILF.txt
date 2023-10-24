@@ -1,0 +1,15 @@
+# Use up to 4 inputs (A, B, C, D)
+# Use one output (Y)
+# Up to 3 gates supported, 2 sub gates and 1 final output gate
+
+# Inputs
+.inputs 4 A B C D
+.outputs 1 Y
+
+# Logic gates
+.names A B C AND_output
+111 1
+.names C D OR_output
+10 1
+.names AND_output OR_output Y
+10 1
