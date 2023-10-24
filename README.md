@@ -41,6 +41,9 @@ The program can be run with the following command on windows:
 
 **python .\program1.py input.txt**
 
+When prompted with: "Is the input a combinational logic circuit or a boolean algebraic function? (C/B):"
+input 'C' for combinational logic circuit and 'B' for boolean algebraic function.
+
 The input file is passed as an argument with the run command.
 Input constraints can be found on the example input text files.
 
