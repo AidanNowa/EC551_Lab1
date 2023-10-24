@@ -18,14 +18,6 @@ def parse_boolean_expression_file(file_path):
         
     return None # return none if no expression found
 
-class LogicGate:
-    def __init__(self, gate_type, inputs):
-        self.gate_type = gate_type
-        self.inputs = inputs
-
-    def __str__(self):
-        return f"{self.gate_type}({', '.join(self.inputs)})"
-
 
 def read_blif(filename):
     inputs = []
@@ -48,6 +40,7 @@ def read_blif(filename):
         elif parts[0] == ".names":
             output_var = parts[-1]
             input_vars = parts[1:-1]
+            #generate truth table from BLIF by reading the file truth table after each gate declaration
             truth_table = []
             for line in lines:
                 if line.startswith("1"):
@@ -56,21 +49,11 @@ def read_blif(filename):
                     truth_table.append("~" + line.strip()[:-2])
                 elif line.startswith("."):
                     break
+            #pair output_var with the logical expression created and append to the 'logic' list
             logic.append((output_var, And(*[Or(*(Not(v) for v in input_vars), *truth_table)])))
 
     return inputs, outputs, logic
 
-def parse_circuit_file(file_path):
-    circuit_graph = {}
-    with open(file_path, 'r') as file:
-        for line in file:
-            parts = line.strip().split(': ')
-            node_name = parts[0]
-            gate_info = parts[1].split()
-            gate_type = gate_info[0]
-            inputs = gate_info[1:]
-            circuit_graph[node_name] = LogicGate(gate_type, inputs)
-    return circuit_graph
 
 def extract_symbols(expression):
     variable_names = list(set(re.findall(r'[A-Za-z]', expression)))
@@ -85,15 +68,17 @@ def boolean_expression_to_minterms(expression, input_symbols):
     symbols = input_symbols.split()
     num_symbols = len(symbols)
 
+    #for sympy, specify list of transformation to be used on an expression
     transformations = (standard_transformations + (implicit_multiplication_application,))
-    expression = parse_expr(expression, transformations=transformations)
+    expression = sympy.parse_expr(expression, transformations=transformations)
 
+    #generate truth table
     truth_table = []
     for assignment in product([0, 1], repeat=num_symbols):
         assignment_dict = dict(zip(symbols, assignment))
         truth_table.append((assignment, expression.subs(assignment_dict)))
 
-    #Extract minterms from the tt
+    #Extract minterms from the tt (1 in tt)
     minterms = []
     for index, (assignment, value) in enumerate(truth_table):
         if value:
@@ -117,8 +102,10 @@ def boolean_expression_to_maxterms(expression, input_symbols):
     truth_table = []
     for assignment in product([0, 1], repeat=num_symbols):
         assignment_dict = dict(zip(symbols, assignment))
+        #not(expression) utilize the not of the expression and find minterms as before (maxterms now)
         truth_table.append((assignment, not(expression).subs(assignment_dict)))
 
+    #Extract maxterms from the tt (0 in tt)
     maxterms = []
     for index, (assignment, value) in enumerate(truth_table):
         if value:
@@ -132,7 +119,7 @@ def boolean_expression_to_maxterms(expression, input_symbols):
 
     return maxterms
 
-
+#used to generate the sop expression of the minterms -> simplify() is used to get minimized rep.
 def minterms_to_canonical_sop(minterms):
     sop_terms = []
     for minterm in minterms:
@@ -153,6 +140,7 @@ def minterms_to_canonical_sop(minterms):
 
     return sop_expression 
 
+#used to generate the pos expression of the minterms -> simplify() is used to get minimized rep.
 def minterms_to_canonical_pos(minterms):
     pos_terms = []
 
@@ -173,6 +161,7 @@ def minterms_to_canonical_pos(minterms):
     return pos_expression
 
 
+#count literals in both originial and min and subtract to find saved
 def calculate_saved_literals(sop_expression, minimized_exp, symbols):
 
     symbol_list = symbols.split()
@@ -187,20 +176,8 @@ def calculate_saved_literals(sop_expression, minimized_exp, symbols):
     saved_literals = original_literals-minimized_literals
     return saved_literals, minimized_literals
 
-# def parse_user_input(input_str):
-#     print("User input: ", input_str)
-#     input_str = input_str.replace('~', 'Not')
-#     input_str = input_str.replace('&', 'And')
-#     input_str = input_str.replace('|', 'Or')
-#     try:
-#         expression = parse_expr(input_str, transformations=(Not,))
-#         return expression
-#     except SyntaxError as e:
-#         print("Syntax Error: ", str(e))
-#     except Exception as e:
-#         print("error parsing expression:", str(e))
-#         return None
 
+#hard coding of converting minterm format (~A & ~B & ~C & ~D) to binary (0000)
 def convert_minterms_to_binary(minterms):
     binary_minterms = []
     for minterm in minterms:
@@ -222,9 +199,9 @@ def convert_minterms_to_binary(minterms):
 
         binary_minterms.append(minterm)
 
-    #print("Binary minterms: ", binary_minterms)
     return binary_minterms
 
+#based off minterm value in binary convert to decimal index for summation notation
 def minterms_to_indices(binary_minterms): 
     indices = []
     for i, minterm in enumerate(binary_minterms):
@@ -349,7 +326,7 @@ def main():
 
     input_file = args.input_file
 
-    is_logic_circuit = input('Is the input a digital combination logic circuit or a Boolean Alegbraic Function? (C/B): ')
+    is_logic_circuit = input('Is the input a combinational logic circuit or a boolean alegbraic function? (C/B): ')
     print('') #add spacing for output visability
 
     circuit_to_bool_expression = ''
