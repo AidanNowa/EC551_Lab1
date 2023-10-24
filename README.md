@@ -26,6 +26,7 @@ variety of outputs:
 10. The number of ON-Set maxterms
 11. The total number of transistors needed for the minimized SOP design
 12. The total number of transistors needed for the minimized POS design
+    
 The tool also produces the inputted boolean expression, variable names, minterms, maxterms, and
 recommends SOP or POS design based on required transistor numbers.
 
