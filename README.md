@@ -38,7 +38,7 @@ sympy library was used for much of the boolean algebra.
 Some libraries may need to be downloaded, such as sympy and pyeda, to run the code properly.
 Ensure that input files are located in the same directory as the program.
 The program can be run with the following command on windows:
-**python .\program1.py input.txt**
+> **python .\program1.py input.txt**
 The input file is passed as argument with the run command.
 Input constraints can be found on the example input text files.
 
