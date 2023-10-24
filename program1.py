@@ -350,6 +350,7 @@ def main():
     input_file = args.input_file
 
     is_logic_circuit = input('Is the input a digital combination logic circuit or a Boolean Alegbraic Function? (C/B): ')
+    print('') #add spacing for output visability
 
     circuit_to_bool_expression = ''
     if is_logic_circuit == 'C':
@@ -418,8 +419,6 @@ def main():
             minimized_sop = simplify(sop_expression, symbols_str)
 
             minimized_pos = simplify(pos_expression,symbols_str)
-            print('')
-            print('Minimized POS:', minimized_pos)
             saved_sop_literals, sop_literals = calculate_saved_literals(sop_expression, minimized_sop, symbols_str)
 
             print('')
