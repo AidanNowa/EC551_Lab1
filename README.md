@@ -30,7 +30,7 @@ The tool also produces the inputted boolean expression, variable names, minterms
 recommends SOP or POS design based on required transistor numbers.
 
 Essential prime implicants and prime implicants are found through the use of the Quine-
-McCluskey method. A python library (shown here: https://github.com/tpircher-zz/quine-mccluskey/tree/master) 
+McCluskey method. An open source python library (shown here: https://github.com/tpircher-zz/quine-mccluskey/tree/master) 
 was used to calculate the Essential Prime Implicants through the provided QM algorithm, and the 
 sympy library was used for much of the boolean algebra.
 
