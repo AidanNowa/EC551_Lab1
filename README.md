@@ -3,9 +3,12 @@ Programming Assignment 1 – Logic Synthesis Engine for EC551
 
 # Repo Organization
 program1.py -- Contains main function as well as all sub-functions called during the main function
+
 input_examples/ -- Contains two examples of inputs to program1.py
-      --> input.txt shows an example boolean algebraic function input 
-      --> BILF.txt shows an example of BILF (Berkeley Logic Interchange Format) input which 
+
+      input.txt shows an example boolean algebraic function input 
+
+      BILF.txt shows an example of BILF (Berkeley Logic Interchange Format) input which 
           represents a digital combinational logic circuit
 
 # Tool Description
