@@ -2,11 +2,4 @@
 # Up to 4 variables supported (A,B,C,D) only
 # +/|, */&, ~, and () are supported for expressions
 
-#A & B | c & (D | ~A) 
-#A & D
-#(A & B) | (~C & D) | (A & ~B) | (C & ~D)
-(A & B) | (~C & D)
-#(A & B) | (~C & D)
-#A & ~B
-#(A | B | C) & (~D)
-#(A & B & C) | (D)
+(A & B) | (~C & D) | (A & ~B) | (C & ~D)
